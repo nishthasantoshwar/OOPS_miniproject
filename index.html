@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ResolveIQ - Complaint Management System</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f4f6ff;
+    color:#1f2937;
+}
+
+/* NAVBAR */
+
+.navbar{
+    height:75px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 7%;
+    box-shadow:0 3px 20px rgba(0,0,0,0.08);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#4f46e5;
+}
+
+.logo span{
+    color:#ec4899;
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#374151;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.nav-links a:hover{
+    color:#6366f1;
+}
+
+/* HERO */
+
+.hero{
+    min-height:580px;
+    padding:80px 8%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:50px;
+    color:white;
+
+    background:
+    radial-gradient(circle at 90% 20%,#c084fc,transparent 30%),
+    linear-gradient(135deg,#4338ca,#7c3aed,#db2777);
+}
+
+.hero-text{
+    max-width:650px;
+}
+
+.badge{
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:30px;
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.3);
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:55px;
+    line-height:1.1;
+    margin-bottom:20px;
+}
+
+.hero h1 span{
+    display:block;
+    color:#facc15;
+}
+
+.hero p{
+    font-size:18px;
+    line-height:1.7;
+    color:#ede9fe;
+    margin-bottom:30px;
+}
+
+.hero-button{
+    border:none;
+    padding:16px 28px;
+    border-radius:10px;
+    background:#facc15;
+    color:#312e81;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.hero-button:hover{
+    transform:translateY(-3px);
+}
+
+/* HERO CARD */
+
+.hero-card{
+    width:350px;
+    padding:30px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.3);
+}
+
+.hero-icon{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.hero-card h2{
+    margin-bottom:20px;
+}
+
+.status-box{
+    display:flex;
+    justify-content:space-between;
+    padding:15px;
+    margin:10px 0;
+    border-radius:10px;
+    background:rgba(255,255,255,0.12);
+}
+
+/* MAIN */
+
+.container{
+    width:86%;
+    max-width:1200px;
+    margin:auto;
+}
+
+section{
+    padding:80px 0;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.section-title small{
+    color:#6366f1;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.section-title h2{
+    font-size:36px;
+    color:#312e81;
+    margin:10px 0;
+}
+
+.section-title p{
+    color:#6b7280;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.dashboard-card{
+    background:white;
+    padding:28px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    border-top:5px solid;
+}
+
+.dashboard-card .icon{
+    font-size:32px;
+}
+
+.dashboard-card h3{
+    font-size:35px;
+    margin:10px 0;
+}
+
+.dashboard-card p{
+    color:#6b7280;
+}
+
+.total{
+    border-color:#8b5cf6;
+}
+
+.pending{
+    border-color:#f59e0b;
+}
+
+.progress{
+    border-color:#3b82f6;
+}
+
+.resolved{
+    border-color:#10b981;
+}
+
+/* FORM */
+
+.form-container{
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.form-group{
+    margin-bottom:22px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:14px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#6366f1;
+    box-shadow:0 0 0 3px #e0e7ff;
+}
+
+textarea{
+    min-height:130px;
+    resize:vertical;
+}
+
+.submit-button{
+    padding:14px 25px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    color:white;
+    font-weight:bold;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.submit-button:hover{
+    box-shadow:0 8px 20px rgba(79,70,229,0.3);
+}
+
+/* TRACKING */
+
+.table-container{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+.search{
+    margin-bottom:25px;
+}
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#eef2ff;
+    color:#3730a3;
+    padding:15px;
+    text-align:left;
+}
+
+td{
+    padding:15px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.status{
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status-pending{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.status-progress{
+    background:#dbeafe;
+    color:#1e40af;
+}
+
+.status-resolved{
+    background:#dcfce7;
+    color:#166534;
+}
+
+/* FEEDBACK */
+
+.feedback-container{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+    text-align:center;
+}
+
+.stars{
+    font-size:42px;
+    margin:20px;
+}
+
+.stars span{
+    color:#d1d5db;
+    cursor:pointer;
+}
+
+.stars span.active{
+    color:#facc15;
+}
+
+/* FOOTER */
+
+footer{
+    background:#111827;
+    color:white;
+    text-align:center;
+    padding:45px;
+}
+
+footer .logo{
+    margin-bottom:10px;
+}
+
+footer p{
+    color:#d1d5db;
+    margin:8px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .hero{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .hero-card{
+        width:100%;
+        max-width:400px;
+    }
+
+    .dashboard{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:38px;
+    }
+
+    .dashboard{
+        grid-template-columns:1fr;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        width:92%;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        Resolve<span>IQ</span>
+    </div>
+
+    <div class="nav-links">
+
+        <a href="#home">Home</a>
+
+        <a href="#dashboard">Dashboard</a>
+
+        <a href="#complaint">Complaint</a>
+
+        <a href="#track">Track</a>
+
+        <a href="#feedback">Feedback</a>
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+    <div class="hero-text">
+
+        <div class="badge">
+            ✨ Smart Digital Grievance Portal
+        </div>
+
+        <h1>
+            Digital Complaint
+            <span>Management System</span>
+        </h1>
+
+        <p>
+            Submit complaints, track their progress and
+            get faster resolutions through one simple,
+            transparent and user-friendly platform.
+        </p>
+
+        <button
+            class="hero-button"
+            onclick="goToComplaint()">
+
+            Submit a Complaint →
+
+        </button>
+
+    </div>
+
+
+    <div class="hero-card">
+
+        <div class="hero-icon">
+            📋
+        </div>
+
+        <h2>
+            Complaint Status
+        </h2>
+
+        <div class="status-box">
+
+            <span>🟡 Pending</span>
+
+            <b id="heroPending">0</b>
+
+        </div>
+
+        <div class="status-box">
+
+            <span>🔵 In Progress</span>
+
+            <b id="heroProgress">0</b>
+
+        </div>
+
+        <div class="status-box">
+
+            <span>🟢 Resolved</span>
+
+            <b id="heroResolved">0</b>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="container">
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard">
+
+    <div class="section-title">
+
+        <small>OVERVIEW</small>
+
+        <h2>
+            Complaint Dashboard
+        </h2>
+
+        <p>
+            Monitor complaint activity and resolution status.
+        </p>
+
+    </div>
+
+
+    <div class="dashboard">
+
+
+        <div class="dashboard-card total">
+
+            <div class="icon">📩</div>
+
+            <h3 id="total">
+                0
+            </h3>
+
+            <p>
+                Total Complaints
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-card pending">
+
+            <div class="icon">⏳</div>
+
+            <h3 id="pending">
+                0
+            </h3>
+
+            <p>
+                Pending
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-card progress">
+
+            <div class="icon">🔄</div>
+
+            <h3 id="progress">
+                0
+            </h3>
+
+            <p>
+                In Progress
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-card resolved">
+
+            <div class="icon">✅</div>
+
+            <h3 id="resolved">
+                0
+            </h3>
+
+            <p>
+                Resolved
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- COMPLAINT FORM -->
+
+<section id="complaint">
+
+    <div class="section-title">
+
+        <small>REGISTER</small>
+
+        <h2>
+            Submit a Complaint
+        </h2>
+
+        <p>
+            Provide the required details to register your complaint.
+        </p>
+
+    </div>
+
+
+    <div class="form-container">
+
+        <form id="complaintForm">
+
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your full name"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="example@email.com"
+                        required>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Category
+                    </label>
+
+                    <select id="category" required>
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option>
+                            Electricity
+                        </option>
+
+                        <option>
+                            Water Supply
+                        </option>
+
+                        <option>
+                            Road & Transport
+                        </option>
+
+                        <option>
+                            Healthcare
+                        </option>
+
+                        <option>
+                            Education
+                        </option>
+
+                        <option>
+                            Waste Management
+                        </option>
+
+                        <option>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Priority
+                    </label>
+
+                    <select id="priority" required>
+
+                        <option value="">
+                            Select Priority
+                        </option>
+
+                        <option>
+                            Low
+                        </option>
+
+                        <option>
+                            Medium
+                        </option>
+
+                        <option>
+                            High
+                        </option>
+
+                        <option>
+                            Critical
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Complaint Title
+                </label>
+
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Enter complaint title"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Complaint Description
+                </label>
+
+                <textarea
+                    id="description"
+                    placeholder="Describe your complaint..."
+                    required></textarea>
+
+            </div>
+
+
+            <button
+                class="submit-button"
+                type="submit">
+
+                🚀 Submit Complaint
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- TRACK COMPLAINT -->
+
+<section id="track">
+
+    <div class="section-title">
+
+        <small>MONITOR</small>
+
+        <h2>
+            Track Complaints
+        </h2>
+
+        <p>
+            Search and monitor submitted complaints.
+        </p>
+
+    </div>
+
+
+    <div class="table-container">
+
+
+        <div class="search">
+
+            <input
+                type="text"
+                id="search"
+                placeholder="🔎 Search by Complaint ID, title or category..."
+                onkeyup="displayComplaints()">
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Complaint ID
+                        </th>
+
+                        <th>
+                            Title
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Priority
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="complaintTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEEDBACK -->
+
+<section id="feedback">
+
+    <div class="section-title">
+
+        <small>EXPERIENCE</small>
+
+        <h2>
+            Feedback & Rating
+        </h2>
+
+        <p>
+            Help us improve our complaint management service.
+        </p>
+
+    </div>
+
+
+    <div class="feedback-container">
+
+        <h3>
+            How was your experience?
+        </h3>
+
+
+        <div class="stars">
+
+            <span onclick="rate(1)">★</span>
+
+            <span onclick="rate(2)">★</span>
+
+            <span onclick="rate(3)">★</span>
+
+            <span onclick="rate(4)">★</span>
+
+            <span onclick="rate(5)">★</span>
+
+        </div>
+
+
+        <textarea
+            id="feedbackText"
+            placeholder="Write your feedback here...">
+        </textarea>
+
+
+        <br><br>
+
+
+        <button
+            class="submit-button"
+            onclick="submitFeedback()">
+
+            Send Feedback
+
+        </button>
+
+    </div>
+
+</section>
+
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="logo">
+        Resolve<span>IQ</span>
+    </div>
+
+    <p>
+        Digital Complaint Management & Grievance Portal
+    </p>
+
+    <p>
+        © 2026 ResolveIQ | All Rights Reserved
+    </p>
+
+</footer>
+
+
+<script>
+
+
+let complaints =
+JSON.parse(localStorage.getItem("complaints")) || [];
+
+
+// GO TO COMPLAINT
+
+function goToComplaint(){
+
+    document
+    .getElementById("complaint")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+// SUBMIT COMPLAINT
+
+document
+.getElementById("complaintForm")
+.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+
+    const complaint = {
+
+        id:
+        "CMP" +
+        Math.floor(
+            1000 +
+            Math.random()*9000
+        ),
+
+        name:
+        document.getElementById("name").value,
+
+        email:
+        document.getElementById("email").value,
+
+        category:
+        document.getElementById("category").value,
+
+        priority:
+        document.getElementById("priority").value,
+
+        title:
+        document.getElementById("title").value,
+
+        description:
+        document.getElementById("description").value,
+
+        status:"Pending",
+
+        date:
+        new Date().toLocaleDateString()
+
+    };
+
+
+    complaints.push(complaint);
+
+
+    localStorage.setItem(
+        "complaints",
+        JSON.stringify(complaints)
+    );
+
+
+    alert(
+        "✅ Complaint Submitted Successfully!\n\n" +
+        "Your Complaint ID is: " +
+        complaint.id
+    );
+
+
+    document
+    .getElementById("complaintForm")
+    .reset();
+
+
+    displayComplaints();
+
+});
+
+
+// DISPLAY COMPLAINTS
+
+function displayComplaints(){
+
+    const table =
+    document.getElementById(
+        "complaintTable"
+    );
+
+
+    const search =
+    document.getElementById(
+        "search"
+    ).value.toLowerCase();
+
+
+    table.innerHTML="";
+
+
+    complaints
+    .filter(c =>
+
+        c.id
+        .toLowerCase()
+        .includes(search)
+
+        ||
+
+        c.title
+        .toLowerCase()
+        .includes(search)
+
+        ||
+
+        c.category
+        .toLowerCase()
+        .includes(search)
+
+    )
+    .forEach(c=>{
+
+
+        let statusClass;
+
+
+        if(c.status==="Pending"){
+
+            statusClass =
+            "status-pending";
+
+        }
+
+        else if(c.status==="In Progress"){
+
+            statusClass =
+            "status-progress";
+
+        }
+
+        else{
+
+            statusClass =
+            "status-resolved";
+
+        }
+
+
+        const row =
+        document.createElement("tr");
+
+
+        row.innerHTML=`
+
+            <td>
+                <b>${c.id}</b>
+            </td>
+
+            <td>
+                ${c.title}
+            </td>
+
+            <td>
+                ${c.category}
+            </td>
+
+            <td>
+                ${c.priority}
+            </td>
+
+            <td>
+
+                <span
+                class="status ${statusClass}">
+
+                    ${c.status}
+
+                </span>
+
+            </td>
+
+            <td>
+                ${c.date}
+            </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+
+    updateDashboard();
+
+}
+
+
+// UPDATE DASHBOARD
+
+function updateDashboard(){
+
+
+    const total =
+    complaints.length;
+
+
+    const pending =
+    complaints.filter(
+        c=>c.status==="Pending"
+    ).length;
+
+
+    const progress =
+    complaints.filter(
+        c=>c.status==="In Progress"
+    ).length;
+
+
+    const resolved =
+    complaints.filter(
+        c=>c.status==="Resolved"
+    ).length;
+
+
+    document.getElementById(
+        "total"
+    ).textContent=total;
+
+
+    document.getElementById(
+        "pending"
+    ).textContent=pending;
+
+
+    document.getElementById(
+        "progress"
+    ).textContent=progress;
+
+
+    document.getElementById(
+        "resolved"
+    ).textContent=resolved;
+
+
+    document.getElementById(
+        "heroPending"
+    ).textContent=pending;
+
+
+    document.getElementById(
+        "heroProgress"
+    ).textContent=progress;
+
+
+    document.getElementById(
+        "heroResolved"
+    ).textContent=resolved;
+
+}
+
+
+// RATING
+
+function rate(number){
+
+    const stars =
+    document.querySelectorAll(
+        ".stars span"
+    );
+
+
+    stars.forEach(
+        (star,index)=>{
+
+            if(index<number){
+
+                star.classList.add(
+                    "active"
+                );
+
+            }
+
+            else{
+
+                star.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// FEEDBACK
+
+function submitFeedback(){
+
+    const text =
+    document
+    .getElementById(
+        "feedbackText"
+    )
+    .value.trim();
+
+
+    if(text===""){
+
+        alert(
+            "Please enter your feedback."
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "⭐ Thank you for your valuable feedback!"
+    );
+
+
+    document
+    .getElementById(
+        "feedbackText"
+    )
+    .value="";
+
+}
+
+
+// LOAD DATA
+
+displayComplaints();
+
+
+</script>
+
+</body>
+</html>
+```
+
